@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أبو حفص | جميع المنتجات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: #f8f9fc;
+        }
+
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 25px;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #e67e22, #d35400);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .logo-text h1 {
+            font-size: 26px;
+            font-weight: 800;
+            color: #2c3e50;
+        }
+
+        .logo-text p {
+            font-size: 11px;
+            color: #7f8c8d;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #e67e22;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 22px;
+            color: #2c3e50;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background: #e67e22;
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a2634 100%);
+            border-radius: 25px;
+            padding: 40px 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .products-layout {
+            display: flex;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .filters-sidebar {
+            width: 280px;
+            flex-shrink: 0;
+        }
+
+        .filter-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e67e22;
+            display: inline-block;
+        }
+
+        .filter-group {
+            margin-bottom: 20px;
+        }
+
+        .filter-group h4 {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+
+        .category-filter {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .category-filter label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+
+        .category-filter input {
+            width: 18px;
+            height: 18px;
+            accent-color: #e67e22;
+        }
+
+        .price-inputs {
+            display: flex;
+            gap: 10px;
+        }
+
+        .price-inputs input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-filter {
+            flex: 1;
+            padding: 8px;
+            background: #e67e22;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .btn-reset {
+            flex: 1;
+            padding: 8px;
+            background: #95a5a6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .products-content {
+            flex: 1;
+        }
+
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .products-count {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .sort-select {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: 0.3s;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-img {
+            height: 220px;
+            background: linear-gradient(135deg, #f5f5f5, #eaeef2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-img i {
+            font-size: 60px;
+            color: #e67e22;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .product-category {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 22px;
+            font-weight: 800;
+            color: #e67e22;
+            margin: 10px 0;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            padding: 12px;
+            background: #e67e22;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background: #d35400;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 40px 0;
+        }
+
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 600;
+        }
+
+        .page-btn.active {
+            background: #e67e22;
+            color: white;
+            border-color: #e67e22;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px;
+            background: white;
+            border-radius: 20px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #27ae60;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            z-index: 9999;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .products-layout {
+                flex-direction: column;
+            }
+
+            .filters-sidebar {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-wrapper {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <div class="logo-icon"><i class="fas fa-laptop-code"></i></div>
+                    <div class="logo-text">
+                        <h1>أبو حفص</h1>
+                        <p>متجر الكترونيات وكماليات الكمبيوتر</p>
+                    </div>
+                </div>
+                <div class="nav-links"><a href="index.html">الرئيسية</a><a href="products.html"
+                        class="active">المنتجات</a><a href="cart.html">السلة</a></div>
+                <div class="nav-icons">
+                    <div class="cart-icon" id="cartIcon"><i class="fas fa-shopping-cart"></i><span class="cart-count"
+                            id="cartCount">0</span></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1>🛍️ جميع المنتجات</h1>
+                <p>اكتشف أحدث المنتجات من أفضل الماركات العالمية</p>
+            </div>
+
+            <div class="products-layout">
+                <aside class="filters-sidebar">
+                    <div class="filter-card">
+                        <div class="filter-title">تصفية المنتجات</div>
+                        <div class="filter-group">
+                            <h4>الفئات</h4>
+                            <div class="category-filter" id="categoryFilters"><label><input type="checkbox" value="all"
+                                        checked> جميع المنتجات</label><label><input type="checkbox" value="laptops"> 💻
+                                    لابات</label><label><input type="checkbox" value="screens"> 🖥️
+                                    شاشات</label><label><input type="checkbox" value="cases"> 🖧
+                                    كيسات</label><label><input type="checkbox" value="accessories"> 🎧 اكسسوارات</label>
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <h4>نطاق السعر</h4>
+                            <div class="price-inputs"><input type="number" id="minPrice" placeholder="أقل سعر"><input
+                                    type="number" id="maxPrice" placeholder="أعلى سعر"></div>
+                        </div>
+                        <div class="filter-buttons"><button class="btn-filter" id="applyFilters">تطبيق</button><button
+                                class="btn-reset" id="resetFilters">إعادة ضبط</button></div>
+                    </div>
+                </aside>
+
+                <div class="products-content">
+                    <div class="products-header">
+                        <div class="products-count" id="productsCount"></div><select class="sort-select"
+                            id="sortSelect">
+                            <option value="default">ترتيب حسب</option>
+                            <option value="price_asc">السعر: من الأقل للأعلى</option>
+                            <option value="price_desc">السعر: من الأعلى للأقل</option>
+                        </select>
+                    </div>
+                    <div class="products-grid" id="productsGrid"></div>
+                    <div class="pagination" id="pagination"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let products = [];
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let currentProducts = [];
+        let currentPage = 1;
+        let itemsPerPage = 8;
+
+        function loadProducts() {
+            const savedProducts = localStorage.getItem('products');
+            if (savedProducts) {
+                products = JSON.parse(savedProducts);
+            } else {
+                products = [
+                    { id: 1, name: "MacBook Pro M2", price: 45000, category: "laptops", description: "شريحة M2، 16GB رام، 512GB SSD", stock: 15, icon: "laptop", image: null },
+                    { id: 2, name: "ASUS ROG Strix", price: 38000, category: "laptops", description: "RTX 4060، 16GB رام", stock: 8, icon: "laptop", image: null },
+                    { id: 3, name: "Samsung 27'' 4K", price: 8500, category: "screens", description: "شاشة 4K UHD، 60Hz", stock: 12, icon: "tv", image: null },
+                    { id: 4, name: "LG UltraGear 24''", price: 4500, category: "screens", description: "144Hz، 1ms", stock: 20, icon: "tv", image: null },
+                    { id: 5, name: "Cooler Master Case", price: 2800, category: "cases", description: "كيسة Mid Tower", stock: 10, icon: "server", image: null },
+                    { id: 6, name: "Logitech MX Master 3S", price: 1800, category: "accessories", description: "ماوس لاسلكي", stock: 25, icon: "mouse", image: null }
+                ];
+                localStorage.setItem('products', JSON.stringify(products));
+            }
+            currentProducts = [...products];
+        }
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const cartCountSpan = document.getElementById('cartCount');
+            if (cartCountSpan) cartCountSpan.innerText = totalItems;
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `✅ ${message}`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function addToCart(product) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            const existing = cart.find(item => item.id === product.id);
+            if (existing) {
+                existing.quantity++;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    category: product.category,
+                    description: product.description,
+                    stock: product.stock,
+                    icon: product.icon,
+                    image: product.image,
+                    quantity: 1
+                });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            showToast(`تم إضافة ${product.name} إلى السلة`);
+        }
+
+        function getCategoryName(category) {
+            const names = { laptops: 'لابتوب', screens: 'شاشة', cases: 'كيسة', accessories: 'اكسسوار' };
+            return names[category] || category;
+        }
+
+        function getIconClass(category) {
+            const icons = { laptops: 'laptop', screens: 'tv', cases: 'server', accessories: 'headphones' };
+            return icons[category] || 'box';
+        }
+
+        function applyFilters() {
+            let filtered = [...products];
+            const selectedCategories = [];
+            document.querySelectorAll('#categoryFilters input').forEach(cb => { if (cb.checked && cb.value !== 'all') selectedCategories.push(cb.value); });
+            const allChecked = document.querySelector('#categoryFilters input[value="all"]').checked;
+            if (!allChecked && selectedCategories.length > 0) { filtered = filtered.filter(p => selectedCategories.includes(p.category)); }
+            const minPrice = document.getElementById('minPrice').value; const maxPrice = document.getElementById('maxPrice').value;
+            if (minPrice) filtered = filtered.filter(p => p.price >= parseInt(minPrice));
+            if (maxPrice) filtered = filtered.filter(p => p.price <= parseInt(maxPrice));
+            currentProducts = filtered; currentPage = 1; applySorting(); renderProducts(); updateProductsCount();
+        }
+
+        function applySorting() {
+            const sortValue = document.getElementById('sortSelect').value;
+            if (sortValue === 'price_asc') currentProducts.sort((a, b) => a.price - b.price);
+            else if (sortValue === 'price_desc') currentProducts.sort((a, b) => b.price - a.price);
+            else currentProducts.sort((a, b) => a.id - b.id);
+        }
+
+        function resetFilters() {
+            document.querySelectorAll('#categoryFilters input').forEach(cb => { cb.checked = cb.value === 'all'; });
+            document.getElementById('minPrice').value = ''; document.getElementById('maxPrice').value = '';
+            document.getElementById('sortSelect').value = 'default';
+            currentProducts = [...products]; currentPage = 1; renderProducts(); updateProductsCount();
+        }
+
+        function updateProductsCount() { document.getElementById('productsCount').innerHTML = `عرض ${currentProducts.length} منتج`; }
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            const start = (currentPage - 1) * itemsPerPage;
+            const paginated = currentProducts.slice(start, start + itemsPerPage);
+            if (paginated.length === 0) { grid.innerHTML = `<div class="no-results" style="grid-column:1/-1;"><i class="fas fa-search" style="font-size:50px;color:#bdc3c7;"></i><h3>لا توجد منتجات</h3></div>`; renderPagination(0); return; }
+            grid.innerHTML = paginated.map(p => `<div class="product-card" onclick="location.href='product-details.html?id=${p.id}'"><div class="product-img">${p.image && p.image !== 'null' && p.image !== '' ? `<img src="${p.image}" alt="${p.name}">` : `<i class="fas fa-${getIconClass(p.category)}"></i>`}</div><div class="product-info"><div class="product-title">${p.name}</div><div class="product-category">${getCategoryName(p.category)}</div><div class="product-price">${p.price.toLocaleString()} ج.م</div><button class="add-to-cart" onclick="event.stopPropagation(); addToCart({id:${p.id},name:'${p.name}',price:${p.price},category:'${p.category}',description:'${p.description || ''}',stock:${p.stock},icon:'${getIconClass(p.category)}',image:${p.image ? `'${p.image}'` : 'null'}})"><i class="fas fa-cart-plus"></i> أضف للسلة</button></div></div>`).join('');
+            renderPagination(Math.ceil(currentProducts.length / itemsPerPage));
+        }
+
+        function renderPagination(totalPages) {
+            const paginationDiv = document.getElementById('pagination');
+            if (totalPages <= 1) { paginationDiv.innerHTML = ''; return; }
+            let buttons = '';
+            if (currentPage > 1) buttons += `<button class="page-btn" onclick="goToPage(${currentPage - 1})"><i class="fas fa-chevron-right"></i></button>`;
+            for (let i = 1; i <= totalPages; i++) { if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) buttons += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`; }
+            if (currentPage < totalPages) buttons += `<button class="page-btn" onclick="goToPage(${currentPage + 1})"><i class="fas fa-chevron-left"></i></button>`;
+            paginationDiv.innerHTML = buttons;
+        }
+
+        function goToPage(page) { currentPage = page; renderProducts(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProducts(); renderProducts(); updateProductsCount(); updateCartCount();
+            const savedCategory = localStorage.getItem('selectedCategory');
+            if (savedCategory && savedCategory !== 'all') {
+                document.querySelectorAll('#categoryFilters input').forEach(cb => { cb.checked = cb.value === savedCategory; });
+                document.querySelector('#categoryFilters input[value="all"]').checked = false;
+                applyFilters();
+                localStorage.removeItem('selectedCategory');
+            }
+            document.getElementById('applyFilters').addEventListener('click', applyFilters);
+            document.getElementById('resetFilters').addEventListener('click', resetFilters);
+            document.getElementById('sortSelect').addEventListener('change', () => { applySorting(); renderProducts(); });
+            document.getElementById('cartIcon').addEventListener('click', () => { window.location.href = 'cart.html'; });
+            const allCheckbox = document.querySelector('#categoryFilters input[value="all"]');
+            const otherCheckboxes = document.querySelectorAll('#categoryFilters input:not([value="all"])');
+            allCheckbox.addEventListener('change', (e) => { if (e.target.checked) otherCheckboxes.forEach(cb => cb.checked = false); });
+            otherCheckboxes.forEach(cb => { cb.addEventListener('change', () => { if (cb.checked) allCheckbox.checked = false; const anyChecked = Array.from(otherCheckboxes).some(c => c.checked); if (!anyChecked) allCheckbox.checked = true; }); });
+        });
+        window.addToCart = addToCart; window.goToPage = goToPage;
+    </script>
+</body>
+
+</html>

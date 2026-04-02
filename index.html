@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أبو حفص | الرئيسية - متجر الكترونيات وكماليات الكمبيوتر</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: #f8f9fc;
+        }
+
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 25px;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #e67e22, #d35400);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .logo-text h1 {
+            font-size: 26px;
+            font-weight: 800;
+            color: #2c3e50;
+        }
+
+        .logo-text p {
+            font-size: 11px;
+            color: #7f8c8d;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #e67e22;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 22px;
+            color: #2c3e50;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background: #e67e22;
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a2634 100%);
+            border-radius: 30px;
+            margin: 30px 0;
+            padding: 60px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-badge {
+            background: rgba(230, 126, 34, 0.2);
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 30px;
+            color: #e67e22;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            color: white;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .hero p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .heroimage {
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+        }
+
+        /* الصورة نفسها */
+        .heroimage img {
+            max-width: 100%;
+            height: auto;
+
+            /* أهم حاجه */
+            filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.4));
+
+            /* يخليها طالعة لفوق شوية */
+            transform: translateY(10px) scale(1.05);
+
+            transition: 0.4s ease;
+        }
+
+       
+
+        .btn-primary {
+            background: #e67e22;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: #d35400;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: 0.3s;
+        }
+
+        .btn-outline:hover {
+            border-color: #e67e22;
+            background: rgba(230, 126, 34, 0.1);
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 60px 0 30px;
+        }
+
+        .section-title h2 {
+            font-size: 32px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #7f8c8d;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 25px;
+            padding: 35px 20px;
+            text-align: center;
+            transition: 0.3s;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+            border-color: #e67e22;
+        }
+
+        .category-icon {
+            width: 80px;
+            height: 80px;
+            background: #fff5ed;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 40px;
+            color: #e67e22;
+        }
+
+        .category-card h3 {
+            font-size: 20px;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-img {
+            height: 220px;
+            background: linear-gradient(135deg, #f5f5f5, #eaeef2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-img i {
+            font-size: 60px;
+            color: #e67e22;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .product-category {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 22px;
+            font-weight: 800;
+            color: #e67e22;
+            margin: 10px 0;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            padding: 12px;
+            background: #e67e22;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background: #d35400;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+            padding: 40px 0;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+
+        .feature {
+            text-align: center;
+        }
+
+        .feature i {
+            font-size: 40px;
+            color: #e67e22;
+            margin-bottom: 15px;
+        }
+
+        .feature h4 {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .footer {
+            background: #1a2634;
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 60px;
+            border-radius: 30px 30px 0 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #e67e22;
+        }
+
+        .footer-col p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul li a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .footer-col ul li a:hover {
+            color: #e67e22;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            width: 38px;
+            height: 38px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .social-links a:hover {
+            background: #e67e22;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #27ae60;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            z-index: 9999;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-wrapper {
+                flex-direction: column;
+            }
+
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .hero {
+                padding: 40px 25px;
+                text-align: center;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <div class="logo-icon"><i class="fas fa-laptop-code"></i></div>
+                    <div class="logo-text">
+                        <h1>أبو حفص</h1>
+                        <p>متجر الكترونيات وكماليات الكمبيوتر</p>
+                    </div>
+                </div>
+                <div class="nav-links">
+                    <a href="index.html" class="active">الرئيسية</a>
+                    <a href="products.html">المنتجات</a>
+                    <a href="cart.html">السلة</a>
+                </div>
+                <div class="nav-icons">
+                    <div class="cart-icon" id="cartIcon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div class="hero">
+                <div class="hero-content">
+                    <div class="hero-badge">🔥 عروض حصرية</div>
+                    <h1>أفضل العروض على <br>الشاشات واللابسات</h1>
+                    <p>اكتشف أحدث منتجات الكمبيوتر والشاشات والاكسسوارات بأفضل الأسعار. شحن سريع وضمان شامل على جميع
+                        المنتجات.</p>
+                    <div class="hero-buttons">
+                        <a href="products.html" class="btn-primary">تسوق الآن <i class="fas fa-arrow-left"></i></a>
+                        <a href="products.html" class="btn-outline">اكتشف العروض</a>
+                    </div>
+                </div>
+                <div class="heroimage">
+                    <img src="../frontend/5bcf59f5-bbbd-4a8b-b4c5-9fb944b9633c.png">
+                </div>
+            </div>
+
+            <div class="section-title">
+                <h2>تسوق حسب القسم</h2>
+                <p>اختر القسم المناسب لك واكتشف أحدث المنتجات</p>
+            </div>
+
+            <div class="categories-grid">
+                <div class="category-card" onclick="filterCategory('laptops')">
+                    <div class="category-icon"><i class="fas fa-laptop"></i></div>
+                    <h3>💻 لابات</h3>
+                    <p>أحدث أجهزة اللابتوب</p>
+                </div>
+                <div class="category-card" onclick="filterCategory('screens')">
+                    <div class="category-icon"><i class="fas fa-tv"></i></div>
+                    <h3>🖥️ شاشات</h3>
+                    <p>شاشات 4K، 144Hz</p>
+                </div>
+                <div class="category-card" onclick="filterCategory('cases')">
+                    <div class="category-icon"><i class="fas fa-server"></i></div>
+                    <h3>🖧 كيسات</h3>
+                    <p>كيسات كمبيوتر</p>
+                </div>
+                <div class="category-card" onclick="filterCategory('accessories')">
+                    <div class="category-icon"><i class="fas fa-headphones"></i></div>
+                    <h3>🎧 اكسسوارات</h3>
+                    <p>ماوس، كيبورد، سماعات</p>
+                </div>
+            </div>
+
+            <div class="section-title">
+                <h2>✨ أحدث المنتجات</h2>
+                <p>اكتشف أحدث الوافدين لمتجر أبو حفص</p>
+            </div>
+
+            <div class="products-grid" id="featuredProducts"></div>
+
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-truck-fast"></i>
+                    <h4>شحن سريع</h4>
+                    <p>توصيل خلال 2-4 أيام عمل</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>ضمان شامل</h4>
+                    <p>ضمان لمدة عام على جميع المنتجات</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-headset"></i>
+                    <h4>دعم فني</h4>
+                    <p>فريق دعم متاح 24/7</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-credit-card"></i>
+                    <h4>طرق دفع آمنة</h4>
+                    <p>دفع عند الاستلام أو عبر البطاقات</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>أبو حفص ستور</h3>
+                    <p>متجر متخصص في بيع منتجات الكمبيوتر والشاشات والاكسسوارات بأفضل الأسعار وجودة عالية.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="products.html">المنتجات</a></li>
+                        <li><a href="cart.html">السلة</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>خدمات العملاء</h3>
+                    <ul>
+                        <li><a href="#">سياسة الاستبدال والاسترجاع</a></li>
+                        <li><a href="#">الشحن والتوصيل</a></li>
+                        <li><a href="#">طرق الدفع</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>معلومات الاتصال</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i>01095950750</li>
+                        <li><i class="fas fa-envelope"></i> info@abuhafs.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> المنيا، مصر</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2024 أبو حفص ستور. جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let products = [];
+
+        function loadProducts() {
+            const savedProducts = localStorage.getItem('products');
+            if (savedProducts) {
+                products = JSON.parse(savedProducts);
+            } else {
+                products = [
+                    { id: 1, name: "MacBook Pro M2", price: 45000, category: "laptops", description: "شريحة M2، 16GB رام، 512GB SSD", stock: 15, icon: "laptop", image: null },
+                    { id: 2, name: "ASUS ROG Strix", price: 38000, category: "laptops", description: "RTX 4060، 16GB رام", stock: 8, icon: "laptop", image: null },
+                    { id: 3, name: "Samsung 27'' 4K", price: 8500, category: "screens", description: "شاشة 4K UHD، 60Hz", stock: 12, icon: "tv", image: null },
+                    { id: 4, name: "LG UltraGear 24''", price: 4500, category: "screens", description: "144Hz، 1ms", stock: 20, icon: "tv", image: null },
+                    { id: 5, name: "Cooler Master Case", price: 2800, category: "cases", description: "كيسة Mid Tower", stock: 10, icon: "server", image: null },
+                    { id: 6, name: "Logitech MX Master 3S", price: 1800, category: "accessories", description: "ماوس لاسلكي", stock: 25, icon: "mouse", image: null }
+                ];
+                localStorage.setItem('products', JSON.stringify(products));
+            }
+        }
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const cartCountSpan = document.getElementById('cartCount');
+            if (cartCountSpan) {
+                cartCountSpan.innerText = totalItems;
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `✅ ${message}`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function addToCart(product) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            const existing = cart.find(item => item.id === product.id);
+            if (existing) {
+                existing.quantity++;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    category: product.category,
+                    description: product.description,
+                    stock: product.stock,
+                    icon: product.icon,
+                    image: product.image,
+                    quantity: 1
+                });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            showToast(`تم إضافة ${product.name} إلى السلة`);
+        }
+
+        function getCategoryName(category) {
+            const names = { laptops: 'لابتوب', screens: 'شاشة', cases: 'كيسة', accessories: 'اكسسوار' };
+            return names[category] || category;
+        }
+
+        function getIconClass(category) {
+            const icons = { laptops: 'laptop', screens: 'tv', cases: 'server', accessories: 'headphones' };
+            return icons[category] || 'box';
+        }
+
+        function renderFeaturedProducts() {
+            const grid = document.getElementById('featuredProducts');
+            const featured = products.slice(0, 4);
+
+            grid.innerHTML = featured.map(product => `
+            <div class="product-card" onclick="location.href='product-details.html?id=${product.id}'">
+                <div class="product-img">
+                    ${product.image && product.image !== 'null' && product.image !== '' ?
+                    `<img src="${product.image}" alt="${product.name}">` :
+                    `<i class="fas fa-${getIconClass(product.category)}"></i>`
+                }
+                </div>
+                <div class="product-info">
+                    <div class="product-title">${product.name}</div>
+                    <div class="product-category">${getCategoryName(product.category)}</div>
+                    <div class="product-price">${product.price.toLocaleString()} ج.م</div>
+                    <button class="add-to-cart" onclick="event.stopPropagation(); addToCart({
+                        id: ${product.id},
+                        name: '${product.name}',
+                        price: ${product.price},
+                        category: '${product.category}',
+                        description: '${product.description || ''}',
+                        stock: ${product.stock},
+                        icon: '${getIconClass(product.category)}',
+                        image: ${product.image ? `'${product.image}'` : 'null'}
+                    })">
+                        <i class="fas fa-cart-plus"></i> أضف للسلة
+                    </button>
+                </div>
+            </div>
+        `).join('');
+        }
+
+        function filterCategory(category) {
+            localStorage.setItem('selectedCategory', category);
+            window.location.href = 'products.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProducts();
+            renderFeaturedProducts();
+            updateCartCount();
+
+            document.getElementById('cartIcon').addEventListener('click', () => {
+                window.location.href = 'cart.html';
+            });
+        });
+
+        window.addToCart = addToCart;
+        window.filterCategory = filterCategory;
+    </script>
+</body>
+
+</html>

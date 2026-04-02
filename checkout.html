@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أبو حفص | إتمام الدفع</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { background: #f8f9fc; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .btn-primary { background: #e67e22; color: white; border: none; padding: 15px 30px; border-radius: 12px; font-size: 18px; font-weight: 700; cursor: pointer; width: 100%; margin-top: 20px; }
+        .btn-primary:hover { background: #d35400; }
+        .card { background: white; border-radius: 24px; padding: 30px; margin-bottom: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 12px; }
+        .payment-method { display: flex; align-items: center; gap: 15px; padding: 15px; border: 2px solid #e9ecef; border-radius: 12px; margin-bottom: 10px; cursor: pointer; }
+        .payment-method.selected { border-color: #e67e22; background: #fff5ed; }
+        .toast { position: fixed; bottom: 20px; right: 20px; background: #27ae60; color: white; padding: 12px 24px; border-radius: 12px; z-index: 9999; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 style="margin-bottom: 20px; color: #e67e22;">🧾 إتمام الدفع</h1>
+    
+    <div class="card">
+        <h3 style="margin-bottom: 20px;">👤 معلومات العميل</h3>
+        <div class="form-group">
+            <label>الاسم الكامل *</label>
+            <input type="text" id="fullName" placeholder="أدخل اسمك الكامل">
+        </div>
+        <div class="form-group">
+            <label>البريد الإلكتروني *</label>
+            <input type="email" id="email" placeholder="example@email.com">
+        </div>
+        <div class="form-group">
+            <label>رقم الهاتف *</label>
+            <input type="tel" id="phone" placeholder="01234567890">
+        </div>
+        <div class="form-group">
+            <label>المدينة *</label>
+            <select id="city">
+                <option value="">اختر المدينة</option>
+                <option value="القاهرة">القاهرة</option>
+                <option value="الإسكندرية">الإسكندرية</option>
+                <option value="الجيزة">الجيزة</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>العنوان بالتفصيل *</label>
+            <textarea id="address" rows="3" placeholder="اسم الشارع، رقم المبنى"></textarea>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3 style="margin-bottom: 20px;">💳 طريقة الدفع</h3>
+        <div class="payment-method selected" data-method="cash" onclick="selectMethod('cash')">
+            <input type="radio" name="paymentMethod" value="cash" checked> 
+            <span>💰 الدفع عند الاستلام</span>
+        </div>
+        <div class="payment-method" data-method="card" onclick="selectMethod('card')">
+            <input type="radio" name="paymentMethod" value="card"> 
+            <span>💳 بطاقة ائتمان</span>
+        </div>
+        <div class="payment-method" data-method="vodafone" onclick="selectMethod('vodafone')">
+            <input type="radio" name="paymentMethod" value="vodafone"> 
+            <span>📱 فودافون كاش</span>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3 style="margin-bottom: 20px;">📦 ملخص الطلب</h3>
+        <div id="orderSummary">
+            <p>جاري تحميل المنتجات...</p>
+        </div>
+        <div style="border-top: 2px solid #eee; margin-top: 15px; padding-top: 15px;">
+            <div style="display: flex; justify-content: space-between; font-size: 18px; font-weight: bold;">
+                <span>الإجمالي:</span>
+                <span id="totalAmount" style="color: #e67e22;">0 ج.م</span>
+            </div>
+        </div>
+    </div>
+    
+    <button class="btn-primary" id="confirmBtn">
+        <i class="fas fa-check-circle"></i> تأكيد الطلب
+    </button>
+</div>
+
+<script>
+    console.log('========================================');
+    console.log('✅ صفحة الدفع تم تحميلها');
+    console.log('========================================');
+    
+    // ========== بيانات تجريبية ==========
+    // منتجات تجريبية في السلة
+    let cart = [
+        { id: 1, name: "MacBook Pro M2", price: 45000, quantity: 1 },
+        { id: 2, name: "Logitech MX Master 3S", price: 1800, quantity: 2 }
+    ];
+    
+    let orders = JSON.parse(localStorage.getItem('orders')) || [];
+    
+    // ========== عرض ملخص الطلب ==========
+    function displayOrderSummary() {
+        let subtotal = 0;
+        let html = '';
+        
+        cart.forEach(item => {
+            const itemTotal = item.price * item.quantity;
+            subtotal += itemTotal;
+            html += `
+                <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee;">
+                    <div>
+                        <strong>${item.name}</strong>
+                        <div style="font-size: 12px; color: gray;">الكمية: ${item.quantity}</div>
+                    </div>
+                    <div style="color: #e67e22; font-weight: bold;">${itemTotal.toLocaleString()} ج.م</div>
+                </div>
+            `;
+        });
+        
+        const shipping = subtotal >= 1000 ? 0 : 50;
+        const total = subtotal + shipping;
+        
+        html += `
+            <div style="margin-top: 15px;">
+                <div style="display: flex; justify-content: space-between; padding: 8px 0;">
+                    <span>المجموع الفرعي:</span>
+                    <span>${subtotal.toLocaleString()} ج.م</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 8px 0;">
+                    <span>الشحن:</span>
+                    <span>${shipping === 0 ? 'مجاني' : shipping.toLocaleString() + ' ج.م'}</span>
+                </div>
+            </div>
+        `;
+        
+        document.getElementById('orderSummary').innerHTML = html;
+        document.getElementById('totalAmount').innerHTML = total.toLocaleString() + ' ج.م';
+        
+        return { subtotal, shipping, total };
+    }
+    
+    // ========== اختيار طريقة الدفع ==========
+    function selectMethod(method) {
+        document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('selected'));
+        document.querySelector(`.payment-method[data-method="${method}"]`).classList.add('selected');
+        document.querySelector(`input[name="paymentMethod"][value="${method}"]`).checked = true;
+        console.log('✅ تم اختيار طريقة الدفع:', method);
+    }
+    
+    // ========== تأكيد الطلب ==========
+    function confirmOrder() {
+        console.log('🔴🔴🔴 تم الضغط على زر تأكيد الطلب 🔴🔴🔴');
+        
+        // جلب البيانات
+        const fullName = document.getElementById('fullName').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const city = document.getElementById('city').value;
+        const address = document.getElementById('address').value.trim();
+        
+        let paymentMethod = null;
+        const selectedRadio = document.querySelector('input[name="paymentMethod"]:checked');
+        if (selectedRadio) paymentMethod = selectedRadio.value;
+        
+        console.log('📝 البيانات المدخلة:', { fullName, email, phone, city, address, paymentMethod });
+        
+        // التحقق
+        if (!fullName) { showMessage('يرجى إدخال الاسم الكامل', 'error'); return; }
+        if (!email) { showMessage('يرجى إدخال البريد الإلكتروني', 'error'); return; }
+        if (!phone) { showMessage('يرجى إدخال رقم الهاتف', 'error'); return; }
+        if (!city) { showMessage('يرجى اختيار المدينة', 'error'); return; }
+        if (!address) { showMessage('يرجى إدخال العنوان', 'error'); return; }
+        if (!paymentMethod) { showMessage('يرجى اختيار طريقة الدفع', 'error'); return; }
+        
+        // حساب الإجمالي
+        let subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        let shipping = subtotal >= 1000 ? 0 : 50;
+        let total = subtotal + shipping;
+        
+        // إنشاء الطلب
+        const newOrder = {
+            id: Date.now(),
+            orderNumber: 'ORD-' + Date.now(),
+            customerName: fullName,
+            email: email,
+            phone: phone,
+            address: address,
+            city: city,
+            paymentMethod: paymentMethod,
+            items: cart,
+            subtotal: subtotal,
+            shipping: shipping,
+            total: total,
+            status: 'pending',
+            date: new Date().toLocaleString('ar-EG'),
+            dateISO: new Date().toISOString()
+        };
+        
+        console.log('📦 الطلب الجديد:', newOrder);
+        
+        // حفظ الطلب
+        orders.unshift(newOrder);
+        localStorage.setItem('orders', JSON.stringify(orders));
+        
+        // تفريغ السلة
+        cart = [];
+        localStorage.setItem('cart', JSON.stringify(cart));
+        
+        showMessage(`✅ تم إتمام الطلب بنجاح! رقم: ${newOrder.orderNumber}`, 'success');
+        
+        // التحويل لصفحة النجاح
+        setTimeout(() => {
+            window.location.href = `order-success.html?id=${newOrder.id}`;
+        }, 2000);
+    }
+    
+    // ========== عرض رسالة ==========
+    function showMessage(message, type = 'success') {
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.style.background = type === 'success' ? '#27ae60' : '#e74c3c';
+        toast.innerHTML = type === 'success' ? `✅ ${message}` : `❌ ${message}`;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
+    
+    // ========== ربط الأحداث ==========
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('✅ DOM جاهز بالكامل');
+        
+        // عرض المنتجات
+        displayOrderSummary();
+        
+        // ربط زر التأكيد
+        const confirmBtn = document.getElementById('confirmBtn');
+        if (confirmBtn) {
+            console.log('✅ تم العثور على الزر');
+            confirmBtn.onclick = function() {
+                console.log('🖱️ تم الضغط على الزر (طريقة onclick)');
+                confirmOrder();
+            };
+        } else {
+            console.log('❌ لم يتم العثور على الزر');
+        }
+    });
+    
+    // جعل الدوال متاحة عالمياً
+    window.selectMethod = selectMethod;
+    window.confirmOrder = confirmOrder;
+</script>
+</body>
+</html>
